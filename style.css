@@ -1,0 +1,157 @@
+:root { --size: 300px; --half: 150px; }
+body { margin: 0; background: #1a1a1a; color: white; font-family: sans-serif; overflow: hidden; }
+.game-container { display: flex; width: 100vw; height: 100vh; }
+.viewport { flex: 1; display: flex; align-items: center; justify-content: center; perspective: 1200px; }
+.scene { width: var(--size); height: var(--size); }
+
+.cube {
+    width: 100%; height: 100%; position: relative;
+    transform-style: preserve-3d;
+    transform: rotateX(-20deg) rotateY(30deg);
+    transition: transform 0.3s ease-out;
+}
+
+.face {
+    position: absolute; width: var(--size); height: var(--size);
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    border: 4px solid #000; background: #fff;
+}
+
+.cell {
+    border: 1px solid #bbb; display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; font-weight: bold; color: #333; outline: none;
+}
+
+.button-group {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 8px;
+}
+.button-group button {
+    flex: 1;
+    margin-bottom: 0; /* Override the old margin */
+    padding: 8px 4px;
+}
+
+/* Container for Horizontal Rows */
+.horizontal-controls-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 25px; /* Space between sections */
+}
+
+/* Individual Horizontal Row */
+.h-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.h-row button {
+    flex: 1;
+    padding: 10px;
+    font-size: 1.2rem;
+}
+
+.h-row .label {
+    flex: 0 0 50px; /* Fixed width for labels so buttons align */
+    text-align: center;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #888;
+}
+
+/* Container for the 3 columns */
+.vertical-controls-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Individual Vertical Pillar */
+.v-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.v-column button {
+    width: 100%;
+    padding: 15px 5px;
+    font-size: 1.2rem;
+}
+
+.v-column .label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #888;
+    margin: 2px 0;
+}
+
+/* Keep the horizontal rows looking tidy too */
+.button-group-row {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 8px;
+}
+
+.button-group-row button {
+    flex: 1;
+}
+
+/* Color Coding for Faces */
+.face.front  { background-color: rgba(255, 255, 255, 0.8); } /* White */
+.face.back   { background-color: rgba(255, 255, 0, 0.8);   } /* Yellow */
+.face.top    { background-color: rgba(255, 165, 0, 0.8);   } /* Orange */
+.face.bottom { background-color: rgba(255, 0, 0, 0.8);     } /* Red */
+.face.left   { background-color: rgba(0, 128, 0, 0.8);     } /* Green */
+.face.right  { background-color: rgba(0, 0, 255, 0.8);    } /* Blue */
+
+/* The Mini-Map Diagram */
+.cube-map {
+    display: grid;
+    grid-template-areas: 
+        ".    top  .    ."
+        "left front right back"
+        ".    bot  .    .";
+    gap: 2px;
+    width: 120px;
+    margin: 20px auto;
+}
+
+.map-face {
+    width: 25px;
+    height: 25px;
+    border: 1px solid #333;
+    font-size: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* Map Color Mapping */
+.m-f { grid-area: front; background: #fff; color: #000; }
+.m-b { grid-area: back;  background: #ff0; color: #000; }
+.m-t { grid-area: top;   background: #ffa500; }
+.m-bm { grid-area: bot;  background: #f00; }
+.m-l { grid-area: left;  background: #008000; color: #fff; }
+.m-r { grid-area: right; background: #0000ff; color: #fff; }
+
+/* THE ONLY 3D POSITIONS YOU NEED */
+.front  { transform: rotateY(0deg)   translateZ(var(--half)); }
+.back   { transform: rotateX(180deg) translateZ(var(--half)); }
+.right  { transform: rotateY(90deg)  translateZ(var(--half)); }
+.left   { transform: rotateY(-90deg) translateZ(var(--half)); }
+.top    { transform: rotateX(90deg)  translateZ(var(--half)); }
+.bottom { transform: rotateX(-90deg) translateZ(var(--half)); }
+
+/* UI */
+.sidebar { width: 280px; background: #252525; padding: 20px; box-shadow: -5px 0 15px #000; z-index: 100; }
+button { width: 100%; padding: 12px; margin-bottom: 8px; cursor: pointer; background: #444; color: white; border: 1px solid #666; border-radius: 4px; }
