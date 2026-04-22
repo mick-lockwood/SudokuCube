@@ -38,69 +38,61 @@ function rotateLayer(layer, direction = 'cw') {
     // REMOVED: All manual rotate(180deg) loops
 }
 
-// 3. Vertical Rotation (Standard Physical Mapping)
+// 3. Vertical Rotation (Pure Geometric Mapping)
 function rotateVertical(col, direction = 'cw') {
     const f = getCells('front'), t = getCells('top'), b = getCells('back'), bm = getCells('bottom');
-    let fIdx = [], bIdx = [];
+    let fIdx = [], tIdx = [], bIdx = [], bmIdx = [];
 
     if (col === 'left') {
-        fIdx = [0, 3, 6]; 
-        // In a book-flip, the Left side of the cube is the Left side of the back face
-        // But Top of front maps to Bottom of back [6, 3, 0]
-        bIdx = [6, 3, 0]; 
+        fIdx = [0, 3, 6]; tIdx = [0, 3, 6]; bIdx = [8, 5, 2]; bmIdx = [6, 3, 0];
         rotateFace(getCells('left'), direction === 'cw');
     } else if (col === 'middle') {
-        fIdx = [1, 4, 7]; 
-        bIdx = [7, 4, 1];
+        fIdx = [1, 4, 7]; tIdx = [1, 4, 7]; bIdx = [7, 4, 1]; bmIdx = [7, 4, 1];
     } else if (col === 'right') {
-        fIdx = [2, 5, 8]; 
-        bIdx = [8, 5, 2]; 
+        fIdx = [2, 5, 8]; tIdx = [2, 5, 8]; bIdx = [6, 3, 0]; bmIdx = [8, 5, 2];
         rotateFace(getCells('right'), direction !== 'cw');
     }
 
     if (fIdx.length === 0) return;
 
-    const fVal = getVals(f, fIdx), tVal = getVals(t, fIdx), bVal = getVals(b, bIdx), bmVal = getVals(bm, fIdx);
+    const fVal = getVals(f, fIdx), tVal = getVals(t, tIdx), bVal = getVals(b, bIdx), bmVal = getVals(bm, bmIdx);
 
+    // Flow: Front -> Top -> Back -> Bottom -> Front
     if (direction === 'cw') {
-        // Front -> Top -> Back -> Bottom -> Front
-        setVals(t, fIdx, fVal); 
-        setVals(b, bIdx, tVal); 
-        setVals(bm, fIdx, bVal); 
-        setVals(f, fIdx, bmVal);
+        setVals(t, tIdx, fVal); setVals(b, bIdx, tVal); setVals(bm, bmIdx, bVal); setVals(f, fIdx, bmVal);
     } else {
-        // Front -> Bottom -> Back -> Top -> Front
-        setVals(bm, fIdx, fVal); 
-        setVals(b, bIdx, bmVal); 
-        setVals(t, fIdx, bVal); 
-        setVals(f, fIdx, tVal);
+        setVals(bm, bmIdx, fVal); setVals(b, bIdx, bmVal); setVals(t, tIdx, bVal); setVals(f, fIdx, tVal);
     }
 }
 
-// 4. Side Rotation
+// 4. Side Rotation (With visual inversion for the back face)
 function rotateSide(face, direction = 'cw') {
     const t = getCells('top'), r = getCells('right'), bm = getCells('bottom'), l = getCells('left');
     let tIdx, rIdx, bmIdx, lIdx;
+    
+    // We isolate the ring direction so we can invert it for the back face
+    let ringDir = direction;
 
     if (face === 'front') {
         tIdx = [6, 7, 8]; rIdx = [0, 3, 6]; bmIdx = [2, 1, 0]; lIdx = [8, 5, 2];
         rotateFace(getCells('front'), direction === 'cw');
     } else if (face === 'back') {
-        tIdx = [0, 1, 2]; rIdx = [2, 5, 8]; bmIdx = [8, 7, 6]; lIdx = [6, 3, 0];
-        rotateFace(getCells('back'), direction !== 'cw'); 
+        tIdx = [2, 1, 0]; rIdx = [2, 5, 8]; bmIdx = [0, 1, 2]; lIdx = [0, 3, 6];
+        rotateFace(getCells('back'), direction === 'cw'); 
+        // Invert the ring direction so "CW" visually goes clockwise to the user
+        ringDir = direction === 'cw' ? 'ccw' : 'cw';
     } else if (face === 'middle') {
         tIdx = [3, 4, 5]; rIdx = [1, 4, 7]; bmIdx = [5, 4, 3]; lIdx = [7, 4, 1];
     }
 
     const tVal = getVals(t, tIdx), rVal = getVals(r, rIdx), bmVal = getVals(bm, bmIdx), lVal = getVals(l, lIdx);
 
-    if (direction === 'cw') {
+    if (ringDir === 'cw') {
         setVals(r, rIdx, tVal); setVals(bm, bmIdx, rVal); setVals(l, lIdx, bmVal); setVals(t, tIdx, lVal);
     } else {
         setVals(l, lIdx, tVal); setVals(bm, bmIdx, lVal); setVals(r, rIdx, bmVal); setVals(t, tIdx, rVal);
     }
 }
-
 function rotateFace(cells, clockwise) {
     const vals = cells.map(c => c.innerText);
     const map = clockwise ? [6, 3, 0, 7, 4, 1, 8, 5, 2] : [2, 5, 8, 1, 4, 7, 0, 3, 6];
@@ -129,13 +121,6 @@ function generateSolvedCube(style = 'ordered') {
     faces.forEach(face => {
         const cells = getCells(face);
         let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-        
-        if (style === 'unordered') {
-            for (let i = numbers.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
-            }
-        }
 
         cells.forEach((cell, i) => {
             cell.innerText = numbers[i];
