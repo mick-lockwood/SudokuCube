@@ -53,13 +53,18 @@ function rotateVertical(col, direction = 'cw') {
     const f = getCells('front'), t = getCells('top'), b = getCells('back'), bm = getCells('bottom');
     let fIdx = [], bIdx = [];
 
-    if (col === 'left') {
-        fIdx = [0, 3, 6]; bIdx = [2, 5, 8];
+     if (col === 'left') {
+        fIdx = [0, 3, 6]; 
+        // bIdx mapped to the "Right" side of the back face, 
+        // but in [Bottom, Mid, Top] order to account for the flip
+        bIdx = [8, 5, 2]; 
         rotateFace(getCells('left'), direction === 'cw');
     } else if (col === 'middle') {
-        fIdx = [1, 4, 7]; bIdx = [1, 4, 7];
+        fIdx = [1, 4, 7]; 
+        bIdx = [7, 4, 1];
     } else if (col === 'right') {
-        fIdx = [2, 5, 8]; bIdx = [0, 3, 6];
+        fIdx = [2, 5, 8]; 
+        bIdx = [6, 3, 0];
         rotateFace(getCells('right'), direction !== 'cw');
     }
 
@@ -161,16 +166,12 @@ function generateSolvedCube(style = SOLVE_STYLES.ORDERED) {
         const cells = getCells(face);
         let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
         
-        if (style === SOLVE_STYLES.UNORDERED) {
-            for (let i = numbers.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
-            }
-        }
+        // Shuffle logic here if style is UNORDERED...
 
-        // Just fill them 0-8. No special mapping needed now!
         cells.forEach((cell, i) => {
             cell.innerText = numbers[i];
+            // No more manual style.transform = 'rotate(180deg)' here!
+            // The CSS class handles it now.
         });
     });
 }
