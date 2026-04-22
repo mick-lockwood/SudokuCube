@@ -162,15 +162,15 @@ button[onclick*="expert"]:hover {
 .top    { transform: rotateX(90deg)  translateZ(var(--half)); }
 .bottom { transform: rotateX(-90deg) translateZ(var(--half)); }
 
-/* Flip it horizontally only, so Top stays Top */
 .face.back {
+    /* Flip 180 then Mirror horizontally to fix the text direction */
     transform: rotateY(180deg) translateZ(150px) scaleX(-1);
     background-color: rgba(255, 255, 0, 0.8);
 }
 
-/* Ensure numbers are legible but NOT rotated 180 */
 .face.back .cell {
-    transform: scaleX(-1); /* Un-mirrors the text */
+    /* This fixes the "Upside Down" numbers caused by the physical Y rotation */
+    transform: rotate(180deg);
 }
 
 /* UI */
