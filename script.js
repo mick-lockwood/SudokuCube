@@ -44,21 +44,36 @@ function rotateVertical(col, direction = 'cw') {
     let fIdx = [], bIdx = [];
 
     if (col === 'left') {
-        fIdx = [0, 3, 6]; bIdx = [8, 5, 2]; // Top of front -> Bottom of back
+        fIdx = [0, 3, 6]; 
+        // In a book-flip, the Left side of the cube is the Left side of the back face
+        // But Top of front maps to Bottom of back [6, 3, 0]
+        bIdx = [6, 3, 0]; 
         rotateFace(getCells('left'), direction === 'cw');
     } else if (col === 'middle') {
-        fIdx = [1, 4, 7]; bIdx = [7, 4, 1];
+        fIdx = [1, 4, 7]; 
+        bIdx = [7, 4, 1];
     } else if (col === 'right') {
-        fIdx = [2, 5, 8]; bIdx = [6, 3, 0]; 
+        fIdx = [2, 5, 8]; 
+        bIdx = [8, 5, 2]; 
         rotateFace(getCells('right'), direction !== 'cw');
     }
+
+    if (fIdx.length === 0) return;
 
     const fVal = getVals(f, fIdx), tVal = getVals(t, fIdx), bVal = getVals(b, bIdx), bmVal = getVals(bm, fIdx);
 
     if (direction === 'cw') {
-        setVals(f, fIdx, bmVal); setVals(bm, fIdx, bVal); setVals(b, bIdx, tVal); setVals(t, fIdx, fVal);
+        // Front -> Top -> Back -> Bottom -> Front
+        setVals(t, fIdx, fVal); 
+        setVals(b, bIdx, tVal); 
+        setVals(bm, fIdx, bVal); 
+        setVals(f, fIdx, bmVal);
     } else {
-        setVals(f, fIdx, tVal); setVals(t, fIdx, bVal); setVals(b, bIdx, bmVal); setVals(bm, fIdx, fVal);
+        // Front -> Bottom -> Back -> Top -> Front
+        setVals(bm, fIdx, fVal); 
+        setVals(b, bIdx, bmVal); 
+        setVals(t, fIdx, bVal); 
+        setVals(f, fIdx, tVal);
     }
 }
 
@@ -98,4 +113,30 @@ function generateSolvedCube() {
         let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
         cells.forEach((cell, i) => { cell.innerText = numbers[i]; });
     });
+}
+
+// Add the Scramble Engine
+async function scrambleCube(difficulty) {
+    generateSolvedCube(); // Always start from solved
+    await new Promise(r => setTimeout(r, 300));
+
+    const movesMap = { 'easy': 5, 'medium': 15, 'hard': 30, 'expert': 60 };
+    const moveCount = movesMap[difficulty] || 15;
+
+    const possibleMoves = [
+        () => rotateLayer('top', Math.random() > 0.5 ? 'cw' : 'ccw'),
+        () => rotateLayer('middle', Math.random() > 0.5 ? 'cw' : 'ccw'),
+        () => rotateLayer('bottom', Math.random() > 0.5 ? 'cw' : 'ccw'),
+        () => rotateVertical('left', Math.random() > 0.5 ? 'cw' : 'ccw'),
+        () => rotateVertical('middle', Math.random() > 0.5 ? 'cw' : 'ccw'),
+        () => rotateVertical('right', Math.random() > 0.5 ? 'cw' : 'ccw'),
+        () => rotateSide('front', Math.random() > 0.5 ? 'cw' : 'ccw'),
+        () => rotateSide('middle', Math.random() > 0.5 ? 'cw' : 'ccw'),
+        () => rotateSide('back', Math.random() > 0.5 ? 'cw' : 'ccw')
+    ];
+
+    for (let i = 0; i < moveCount; i++) {
+        possibleMoves[Math.floor(Math.random() * possibleMoves.length)]();
+        await new Promise(r => setTimeout(r, 80));
+    }
 }
