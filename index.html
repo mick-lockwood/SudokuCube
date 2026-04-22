@@ -28,11 +28,15 @@
             </div>
 			<div class="game-controls">
 			    <h3>New Game</h3>
-			    <button onclick="generateSolvedCube(SOLVE_STYLES.ORDERED)">Reset to 1-9</button>
-			    <div class="button-group-row" style="margin-top: 10px;">
+			    <button onclick="generateSolvedCube(SOLVE_STYLES.ORDERED)" style="width: 100%; margin-bottom: 10px;">Reset to 1-9</button>
+			    
+			    <div class="button-group-row">
 			        <button onclick="scrambleCube('easy')">Easy</button>
 			        <button onclick="scrambleCube('medium')">Med</button>
+			    </div>
+			    <div class="button-group-row" style="margin-top: 5px;">
 			        <button onclick="scrambleCube('hard')">Hard</button>
+			        <button onclick="scrambleCube('expert')" style="background-color: #440000; color: white;">Expert</button>
 			    </div>
 			</div>
 			<hr>
