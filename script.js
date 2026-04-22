@@ -130,6 +130,7 @@ document.addEventListener('keydown', (e) => {
     cubeEl.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
 });
 
+// --- RESET LOGIC ---
 function generateSolvedCube(style = 'ordered') {
     const faces = ['front', 'back', 'top', 'bottom', 'left', 'right'];
     
@@ -152,6 +153,7 @@ function generateSolvedCube(style = 'ordered') {
     });
 }
 
+// Scramble engine
 async function scrambleCube(difficulty) {
     generateSolvedCube('ordered');
     await new Promise(r => setTimeout(r, 300));
