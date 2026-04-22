@@ -21,13 +21,16 @@ function rotateLayer(layer, direction = 'cw') {
     let fIdx = [], bIdx = [];
 
     if (layer === 'top') {
-        fIdx = [0, 1, 2]; bIdx = [8, 7, 6]; 
-        rotateFace(getCells('top'), direction === 'cw'); 
+        fIdx = [0, 1, 2]; 
+        bIdx = [0, 1, 2]; // Top row Front maps to Top row Back
+        rotateFace(getCells('top'), direction === 'cw');
     } else if (layer === 'middle') {
-        fIdx = [3, 4, 5]; bIdx = [5, 4, 3];
+        fIdx = [3, 4, 5]; 
+        bIdx = [3, 4, 5];
     } else if (layer === 'bottom') {
-        fIdx = [6, 7, 8]; bIdx = [2, 1, 0];
-        rotateFace(getCells('bottom'), direction !== 'cw'); // Bottom spins opposite to top
+        fIdx = [6, 7, 8]; 
+        bIdx = [6, 7, 8];
+        rotateFace(getCells('bottom'), direction !== 'cw');
     }
 
     if (fIdx.length === 0) return;
@@ -53,18 +56,18 @@ function rotateVertical(col, direction = 'cw') {
     const f = getCells('front'), t = getCells('top'), b = getCells('back'), bm = getCells('bottom');
     let fIdx = [], bIdx = [];
 
-     if (col === 'left') {
+    if (col === 'left') {
         fIdx = [0, 3, 6]; 
-        // bIdx mapped to the "Right" side of the back face, 
-        // but in [Bottom, Mid, Top] order to account for the flip
-        bIdx = [8, 5, 2]; 
+        // On the back face, the left column of the cube is physically 
+        // the right side of the face (indices 2, 5, 8)
+        bIdx = [8, 5, 2]; // Top of front lands on Bottom of back
         rotateFace(getCells('left'), direction === 'cw');
     } else if (col === 'middle') {
         fIdx = [1, 4, 7]; 
         bIdx = [7, 4, 1];
     } else if (col === 'right') {
         fIdx = [2, 5, 8]; 
-        bIdx = [6, 3, 0];
+        bIdx = [6, 3, 0]; // Top of front lands on Bottom of back
         rotateFace(getCells('right'), direction !== 'cw');
     }
 
