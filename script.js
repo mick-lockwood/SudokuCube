@@ -157,10 +157,6 @@ const SOLVE_STYLES = {
 function generateSolvedCube(style = SOLVE_STYLES.ORDERED) {
     const faces = ['front', 'back', 'top', 'bottom', 'left', 'right'];
     
-    // This map translates: [Physical Top-Left, Top-Mid, Top-Right... etc]
-    // into the internal array indices of the rotated back face.
-    const BACK_FACE_MAP = [8, 7, 6, 5, 4, 3, 2, 1, 0];
-
     faces.forEach(face => {
         const cells = getCells(face);
         let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -172,20 +168,18 @@ function generateSolvedCube(style = SOLVE_STYLES.ORDERED) {
             }
         }
 
-        if (face === 'back') {
-            // Place numbers according to the map so they read 1-9 correctly
-            BACK_FACE_MAP.forEach((internalIndex, physicalPos) => {
-                cells[internalIndex].innerText = numbers[physicalPos];
-            });
-        } else {
-            cells.forEach((cell, i) => {
-                cell.innerText = numbers[i];
-            });
-        }
+        // Fill cells normally for ALL faces
+        cells.forEach((cell, i) => {
+            cell.innerText = numbers[i];
+            
+            // If it's the back face, we add a specific class to handle individual cell flipping
+            if (face === 'back') {
+                cell.classList.add('back-cell');
+            } else {
+                cell.classList.remove('back-cell');
+            }
+        });
     });
-    
-    // Ensure numbers are upright
-    document.querySelectorAll('.face.back .cell').forEach(c => c.style.transform = 'rotate(180deg)');
 }
 
 // Scramble Engine
