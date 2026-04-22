@@ -168,15 +168,21 @@ function generateSolvedCube(style = SOLVE_STYLES.ORDERED) {
             }
         }
 
+        // --- THE FIX ---
+        // Because the back face is rotated 180 deg, we must reverse the 
+        // array to make it appear 1-9 from the user's perspective.
+        if (face === 'back') {
+            numbers.reverse();
+        }
+
         cells.forEach((cell, i) => {
             cell.innerText = numbers[i];
         });
     });
     
-    // Refresh back face orientation
+    // Safety orientation check to ensure numbers stay upright
     document.querySelectorAll('.face.back .cell').forEach(c => c.style.transform = 'rotate(180deg)');
 }
-
 // Scramble Engine
 async function scrambleCube(difficulty) {
     // First, make sure we are starting from a solved state
