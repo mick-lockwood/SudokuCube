@@ -136,8 +136,6 @@ function generateSolvedCube(style = 'ordered') {
     
     faces.forEach(face => {
         const cells = getCells(face);
-        if (!cells || cells.length === 0) return;
-
         let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
         
         if (style === 'unordered') {
