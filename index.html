@@ -26,90 +26,94 @@
                 <p>• <b>Arrows:</b> Spin Cube</p>
                 <p>• <b>Click Cell:</b> Type (1-9)</p>
             </div>
-			<div class="game-controls">
-			    <h3>New Game</h3>
-			    <button onclick="generateSolvedCube(SOLVE_STYLES.ORDERED)" style="width: 100%; margin-bottom: 10px;">Reset to 1-9</button>
-			    
-			    <div class="button-group-row">
-			        <button onclick="scrambleCube('easy')">Easy</button>
-			        <button onclick="scrambleCube('medium')">Med</button>
-			    </div>
-			    <div class="button-group-row" style="margin-top: 5px;">
-			        <button onclick="scrambleCube('hard')">Hard</button>
-			        <button onclick="scrambleCube('expert')" style="background-color: #440000; color: white;">Expert</button>
-			    </div>
-			</div>
-			<hr>
-			<div class="controls">
-				<h3>Face Orientation</h3>
-				<div class="cube-map">
-					<div class="map-face m-t">T</div>
-                    <div class="map-face m-b">B</div>
-					<div class="map-face m-l">L</div>
-					<div class="map-face m-f">F</div>
-					<div class="map-face m-r">R</div>
-					<div class="map-face m-bm">D</div>
-				</div>
-				
-				<hr>
-				</div>
-				<h3>Horizontal Layers</h3>
-				<div class="horizontal-controls-container">
-					<div class="h-row">
-						<button onclick="rotateLayer('top', 'cw')">↻</button>
-						<span class="label">Top</span>
-						<button onclick="rotateLayer('top', 'ccw')">↺</button>
-					</div>
-					<div class="h-row">
-						<button onclick="rotateLayer('middle', 'cw')">↻</button>
-						<span class="label">Mid</span>
-						<button onclick="rotateLayer('middle', 'ccw')">↺</button>
-					</div>
-					<div class="h-row">
-						<button onclick="rotateLayer('bottom', 'cw')">↻</button>
-						<span class="label">Bottom</span>
-						<button onclick="rotateLayer('bottom', 'ccw')">↺</button>
-					</div>
-				</div>
+            <div class="game-controls">
+                <h3>New Game</h3>
+                <button onclick="generateSolvedCube('ordered')" style="width: 100%; margin-bottom: 10px;">Reset to 1-9</button>
+                
+                <div class="button-group-row">
+                    <button onclick="scrambleCube('easy')">Easy</button>
+                    <button onclick="scrambleCube('medium')">Med</button>
+                </div>
+                <div class="button-group-row" style="margin-top: 5px;">
+                    <button onclick="scrambleCube('hard')">Hard</button>
+                    <button onclick="scrambleCube('expert')" style="background-color: #440000; color: white;">Expert</button>
+                </div>
+            </div>
+            
+            <hr>
 
-				<h3>Vertical Columns</h3>
-				<div class="vertical-controls-container">
-					<div class="v-column">
-						<button onclick="rotateVertical('left', 'cw')">&uarr;</button>
-						<span class="label">Left</span>
-						<button onclick="rotateVertical('left', 'ccw')">&darr;</button>
-					</div>
-					<div class="v-column">
-						<button onclick="rotateVertical('middle', 'cw')">&uarr;</button>
-						<span class="label">Mid</span>
-						<button onclick="rotateVertical('middle', 'ccw')">&darr;</button>
-					</div>
-					<div class="v-column">
-						<button onclick="rotateVertical('right', 'cw')">&uarr;</button>
-						<span class="label">Right</span>
-						<button onclick="rotateVertical('right', 'ccw')">&darr;</button>
-					</div>
-				</div>
-				
-				<h3>Front & Back Faces</h3>
-				<div class="horizontal-controls-container">
-					<div class="h-row">
-						<button onclick="rotateSide('front', 'cw')">↻</button>
-						<span class="label">Front</span>
-						<button onclick="rotateSide('front', 'ccw')">↺</button>
-					</div>
-					<div class="h-row">
-						<button onclick="rotateSide('middle', 'cw')">↻</button>
-						<span class="label">Mid</span>
-						<button onclick="rotateSide('middle', 'ccw')">↺</button>
-					</div>
-					<div class="h-row">
-						<button onclick="rotateSide('back', 'cw')">↻</button>
-						<span class="label">Back</span>
-						<button onclick="rotateSide('back', 'ccw')">↺</button>
-					</div>
-				</div>
-			</div>
+            <div class="controls">
+                <h3>Face Orientation</h3>
+                <div class="cube-map">
+                    <div class="map-face m-t">T</div>
+                    <div class="map-face m-b">B</div>
+                    <div class="map-face m-l">L</div>
+                    <div class="map-face m-f">F</div>
+                    <div class="map-face m-r">R</div>
+                    <div class="map-face m-bm">D</div>
+                </div>
+                
+                <hr>
+
+                <h3>Horizontal Layers</h3>
+                <div class="horizontal-controls-container">
+                    <div class="h-row">
+                        <button onclick="rotateLayer('top', 'cw')">↻</button>
+                        <span class="label">Top</span>
+                        <button onclick="rotateLayer('top', 'ccw')">↺</button>
+                    </div>
+                    <div class="h-row">
+                        <button onclick="rotateLayer('middle', 'cw')">↻</button>
+                        <span class="label">Mid</span>
+                        <button onclick="rotateLayer('middle', 'ccw')">↺</button>
+                    </div>
+                    <div class="h-row">
+                        <button onclick="rotateLayer('bottom', 'cw')">↻</button>
+                        <span class="label">Bottom</span>
+                        <button onclick="rotateLayer('bottom', 'ccw')">↺</button>
+                    </div>
+                </div>
+
+                <h3>Vertical Columns</h3>
+                <div class="vertical-controls-container">
+                    <div class="v-column">
+                        <button onclick="rotateVertical('left', 'cw')">&uarr;</button>
+                        <span class="label">Left</span>
+                        <button onclick="rotateVertical('left', 'ccw')">&darr;</button>
+                    </div>
+                    <div class="v-column">
+                        <button onclick="rotateVertical('middle', 'cw')">&uarr;</button>
+                        <span class="label">Mid</span>
+                        <button onclick="rotateVertical('middle', 'ccw')">&darr;</button>
+                    </div>
+                    <div class="v-column">
+                        <button onclick="rotateVertical('right', 'cw')">&uarr;</button>
+                        <span class="label">Right</span>
+                        <button onclick="rotateVertical('right', 'ccw')">&darr;</button>
+                    </div>
+                </div>
+                
+                <h3>Front & Back Faces</h3>
+                <div class="horizontal-controls-container">
+                    <div class="h-row">
+                        <button onclick="rotateSide('front', 'cw')">↻</button>
+                        <span class="label">Front</span>
+                        <button onclick="rotateSide('front', 'ccw')">↺</button>
+                    </div>
+                    <div class="h-row">
+                        <button onclick="rotateSide('middle', 'cw')">↻</button>
+                        <span class="label">Mid</span>
+                        <button onclick="rotateSide('middle', 'ccw')">↺</button>
+                    </div>
+                    <div class="h-row">
+                        <button onclick="rotateSide('back', 'cw')">↻</button>
+                        <span class="label">Back</span>
+                        <button onclick="rotateSide('back', 'ccw')">↺</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
