@@ -163,14 +163,16 @@ button[onclick*="expert"]:hover {
 .bottom { transform: rotateX(-90deg) translateZ(var(--half)); }
 
 .face.back {
-    /* Flip 180 then Mirror horizontally to fix the text direction */
+    /* The Book Turn */
     transform: rotateY(180deg) translateZ(150px) scaleX(-1);
-    background-color: rgba(255, 255, 0, 0.8);
 }
 
 .face.back .cell {
-    /* This fixes the "Upside Down" numbers caused by the physical Y rotation */
+    /* The Upright Fix */
     transform: rotate(180deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* UI */
