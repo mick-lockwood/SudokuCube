@@ -34,6 +34,16 @@ body { margin: 0; background: #1a1a1a; color: white; font-family: sans-serif; ov
     padding: 8px 4px;
 }
 
+/* Styling for the Expert button specifically */
+button[onclick*="expert"] {
+    border: 1px solid #ff0000;
+    font-weight: bold;
+}
+
+button[onclick*="expert"]:hover {
+    background-color: #660000;
+}
+
 /* Container for Horizontal Rows */
 .horizontal-controls-container {
     display: flex;
