@@ -115,21 +115,19 @@ function generateSolvedCube() {
     });
 }
 
-// --- CAMERA & GAME ENGINE ---
-
-// Ensure the cube starts at a readable angle
+// --- CAMERA CONTROLS (ORBIT) ---
 let rotX = -20, rotY = 30;
 
 document.addEventListener('keydown', (e) => {
+    const cubeEl = document.getElementById('cube');
+    if (!cubeEl) return;
+
     if (e.key === 'ArrowUp') rotX += 10;
     if (e.key === 'ArrowDown') rotX -= 10;
     if (e.key === 'ArrowLeft') rotY -= 10;
     if (e.key === 'ArrowRight') rotY += 10;
     
-    const cubeEl = document.getElementById('cube');
-    if (cubeEl) {
-        cubeEl.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-    }
+    cubeEl.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
 });
 
 function generateSolvedCube(style = 'ordered') {
