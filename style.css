@@ -162,6 +162,18 @@ button[onclick*="expert"]:hover {
 .top    { transform: rotateX(90deg)  translateZ(var(--half)); }
 .bottom { transform: rotateX(-90deg) translateZ(var(--half)); }
 
+/* This handles the physical orientation of the back face container */
+.face.back {
+    transform: rotateY(180deg) translateZ(150px);
+    /* Ensure the grid itself isn't reversed by the browser */
+    direction: ltr; 
+}
+
+/* This flips the numbers back so they are readable and in order */
+.face.back .back-cell {
+    transform: rotate(180deg); /* This makes the number 1 look like 1 instead of upside down */
+}
+
 /* UI */
 .sidebar { width: 280px; background: #252525; padding: 20px; box-shadow: -5px 0 15px #000; z-index: 100; }
 button { width: 100%; padding: 12px; margin-bottom: 8px; cursor: pointer; background: #444; color: white; border: 1px solid #666; border-radius: 4px; }
