@@ -107,14 +107,6 @@ function rotateFace(cells, clockwise) {
     map.forEach((oldIdx, newIdx) => { cells[newIdx].innerText = vals[oldIdx]; });
 }
 
-function generateSolvedCube() {
-    faceNames.forEach(face => {
-        const cells = getCells(face);
-        let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-        cells.forEach((cell, i) => { cell.innerText = numbers[i]; });
-    });
-}
-
 // --- CAMERA CONTROLS (ORBIT) ---
 let rotX = -20, rotY = 30;
 
