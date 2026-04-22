@@ -163,16 +163,13 @@ button[onclick*="expert"]:hover {
 .bottom { transform: rotateX(-90deg) translateZ(var(--half)); }
 
 .face.back {
-    /* The Book Turn */
+    /* Moves to back and flips horizontally so 1 is top-left, 3 is top-right */
     transform: rotateY(180deg) translateZ(150px) scaleX(-1);
 }
 
 .face.back .cell {
-    /* The Upright Fix */
-    transform: rotate(180deg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    /* Flips the text horizontally so it's readable, but keeps it upright */
+    transform: scaleX(-1);
 }
 
 /* UI */
