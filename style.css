@@ -162,15 +162,17 @@ button[onclick*="expert"]:hover {
 .top    { transform: rotateX(90deg)  translateZ(var(--half)); }
 .bottom { transform: rotateX(-90deg) translateZ(var(--half)); }
 
-/* THE CORRECTED BACK FACE POSITION */
+/* 1. Position the face on the back side */
 .face.back {
-    /* rotateY moves it to the back, scaleX(-1) makes it read left-to-right */
-    transform: rotateY(180deg) translateZ(var(--half)) scaleX(-1);
+    /* Use ONLY rotateY to keep "Top" as "Top" */
+    transform: rotateY(180deg) translateZ(var(--half));
     background-color: rgba(255, 255, 0, 0.8);
 }
 
+/* 2. Fix the mirroring of the numbers */
 .face.back .cell {
-    /* This flips the text back to readable while keeping it right-side up */
+    /* This makes the numbers readable (left-to-right) */
+    /* and keeps them right-side up! */
     transform: scaleX(-1);
 }
 
