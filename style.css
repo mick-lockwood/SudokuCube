@@ -162,17 +162,10 @@ button[onclick*="expert"]:hover {
 .top    { transform: rotateX(90deg)  translateZ(var(--half)); }
 .bottom { transform: rotateX(-90deg) translateZ(var(--half)); }
 
-/* 1. Position and flip the grid physically */
+/* Position the face on the back side using standard 3D space */
 .face.back {
-    /* rotateY(180) + scaleX(-1) = A perfect "Book Page" flip */
-    transform: rotateY(180deg) translateZ(var(--half)) scaleX(-1);
+    transform: rotateY(180deg) translateZ(var(--half));
     background-color: rgba(255, 255, 0, 0.8);
-}
-
-/* 2. Un-mirror the text so it's readable */
-.face.back .cell {
-    transform: scaleX(-1);
-    /* No rotation needed! This keeps them upright */
 }
 
 /* UI */
