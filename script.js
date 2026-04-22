@@ -115,14 +115,58 @@ function generateSolvedCube() {
     });
 }
 
-// Add the Scramble Engine
-async function scrambleCube(difficulty) {
-    generateSolvedCube(); // Always start from solved
-    await new Promise(r => setTimeout(r, 300));
+/* --- STAGE 1: GAME ENGINE --- */
 
-    const movesMap = { 'easy': 5, 'medium': 15, 'hard': 30, 'expert': 60 };
+// Define the Winning Styles
+const SOLVE_STYLES = {
+    ORDERED: 'ordered',
+    UNORDERED: 'unordered'
+};
+
+/**
+ * Resets the cube to a solved state.
+ * @param {string} style - Either 'ordered' (1-9 in order) or 'unordered' (1-9 shuffled per face)
+ */
+function generateSolvedCube(style = SOLVE_STYLES.ORDERED) {
+    faceNames.forEach(face => {
+        const cells = getCells(face);
+        let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        
+        if (style === SOLVE_STYLES.UNORDERED) {
+            // Shuffle numbers for each face independently
+            for (let i = numbers.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
+            }
+        }
+
+        // Apply numbers to cells
+        cells.forEach((cell, i) => {
+            cell.innerText = numbers[i];
+        });
+    });
+}
+
+/**
+ * Scrambles the cube from a solved state based on difficulty.
+ * @param {string} difficulty - 'easy', 'medium', 'hard', or 'expert'
+ */
+async function scrambleCube(difficulty) {
+    // 1. Always reset to a solved state first to ensure solvability
+    generateSolvedCube(SOLVE_STYLES.ORDERED);
+    
+    // Brief pause so the user sees the reset
+    await new Promise(resolve => setTimeout(resolve, 300));
+
+    const movesMap = { 
+        'easy': 5, 
+        'medium': 15, 
+        'hard': 30, 
+        'expert': 60 
+    };
     const moveCount = movesMap[difficulty] || 15;
 
+    // List of all movement functions available in your script
     const possibleMoves = [
         () => rotateLayer('top', Math.random() > 0.5 ? 'cw' : 'ccw'),
         () => rotateLayer('middle', Math.random() > 0.5 ? 'cw' : 'ccw'),
@@ -135,8 +179,11 @@ async function scrambleCube(difficulty) {
         () => rotateSide('back', Math.random() > 0.5 ? 'cw' : 'ccw')
     ];
 
+    // 2. Execute random moves
     for (let i = 0; i < moveCount; i++) {
-        possibleMoves[Math.floor(Math.random() * possibleMoves.length)]();
-        await new Promise(r => setTimeout(r, 80));
+        const move = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+        move();
+        // Delay creates the "scrambling" animation effect
+        await new Promise(resolve => setTimeout(resolve, 80)); 
     }
 }
