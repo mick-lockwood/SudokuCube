@@ -5,7 +5,7 @@ A 3D 'rubik's cube' style Sudoku puzzle creator
 
 A high-performance, vanilla JavaScript 3D Rubik's Cube simulation. This project focuses on solving the mathematical challenges of spatial orientation and 3D coordinate mapping within a web browser.
 
-[Link to Live Demo (Once you enable GitHub Pages)]
+[https://mick-lockwood.github.io/SudokuCube/]
 
 ## 🚀 Features
 
