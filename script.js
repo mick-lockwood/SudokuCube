@@ -146,3 +146,63 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight') rotY += 10;
     cube.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
 });
+
+// Styles for winning
+const SOLVE_STYLES = {
+    UNORDERED: 'unordered', // 1-9 once each face, any order
+    ORDERED: 'ordered'      // 1-9 in 1,2,3... order
+};
+
+function generateSolvedCube(style = SOLVE_STYLES.ORDERED) {
+    const faces = ['front', 'back', 'top', 'bottom', 'left', 'right'];
+    
+    faces.forEach(face => {
+        const cells = getCells(face);
+        let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        
+        if (style === SOLVE_STYLES.UNORDERED) {
+            // Shuffle numbers for each face independently
+            for (let i = numbers.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
+            }
+        }
+
+        cells.forEach((cell, i) => {
+            cell.innerText = numbers[i];
+        });
+    });
+    
+    // Refresh back face orientation
+    document.querySelectorAll('.face.back .cell').forEach(c => c.style.transform = 'rotate(180deg)');
+}
+
+// Scramble Engine
+async function scrambleCube(difficulty) {
+    // First, make sure we are starting from a solved state
+    generateSolvedCube(SOLVE_STYLES.ORDERED);
+    
+    // Give the user a moment to see the reset before scrambling
+    await new Promise(resolve => setTimeout(resolve, 300));
+
+    const movesMap = { 'easy': 5, 'medium': 15, 'hard': 30, 'expert': 60 };
+    const moveCount = movesMap[difficulty] || 15;
+
+    const possibleMoves = [
+        () => rotateLayer('top', Math.random() > 0.5 ? 'cw' : 'ccw'),
+        () => rotateLayer('middle', Math.random() > 0.5 ? 'cw' : 'ccw'),
+        () => rotateLayer('bottom', Math.random() > 0.5 ? 'cw' : 'ccw'),
+        () => rotateVertical('left', Math.random() > 0.5 ? 'cw' : 'ccw'),
+        () => rotateVertical('middle', Math.random() > 0.5 ? 'cw' : 'ccw'),
+        () => rotateVertical('right', Math.random() > 0.5 ? 'cw' : 'ccw'),
+        () => rotateSide('front', Math.random() > 0.5 ? 'cw' : 'ccw'),
+        () => rotateSide('middle', Math.random() > 0.5 ? 'cw' : 'ccw'),
+        () => rotateSide('back', Math.random() > 0.5 ? 'cw' : 'ccw')
+    ];
+
+    for (let i = 0; i < moveCount; i++) {
+        const move = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+        move();
+        await new Promise(resolve => setTimeout(resolve, 80)); // Slightly slower to look better
+    }
+}
