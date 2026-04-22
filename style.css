@@ -162,16 +162,15 @@ button[onclick*="expert"]:hover {
 .top    { transform: rotateX(90deg)  translateZ(var(--half)); }
 .bottom { transform: rotateX(-90deg) translateZ(var(--half)); }
 
-/* This handles the physical orientation of the back face container */
+/* Flip it horizontally only, so Top stays Top */
 .face.back {
-    transform: rotateY(180deg) translateZ(150px);
-    /* Ensure the grid itself isn't reversed by the browser */
-    direction: ltr; 
+    transform: rotateY(180deg) translateZ(150px) scaleX(-1);
+    background-color: rgba(255, 255, 0, 0.8);
 }
 
-/* This flips the numbers back so they are readable and in order */
-.face.back .back-cell {
-    transform: rotate(180deg); /* This makes the number 1 look like 1 instead of upside down */
+/* Ensure numbers are legible but NOT rotated 180 */
+.face.back .cell {
+    transform: scaleX(-1); /* Un-mirrors the text */
 }
 
 /* UI */
