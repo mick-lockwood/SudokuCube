@@ -120,7 +120,16 @@ function generateSolvedCube(style = 'ordered') {
     
     faces.forEach(face => {
         const cells = getCells(face);
+        
+        // This sets the exact 1-9 order for ALL faces
         let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        
+        if (style === 'unordered') {
+            for (let i = numbers.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
+            }
+        }
 
         cells.forEach((cell, i) => {
             cell.innerText = numbers[i];
