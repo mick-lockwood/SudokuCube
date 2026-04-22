@@ -168,16 +168,9 @@ function generateSolvedCube(style = SOLVE_STYLES.ORDERED) {
             }
         }
 
-        // Fill cells normally for ALL faces
+        // Just fill them 0-8. No special mapping needed now!
         cells.forEach((cell, i) => {
             cell.innerText = numbers[i];
-            
-            // If it's the back face, we add a specific class to handle individual cell flipping
-            if (face === 'back') {
-                cell.classList.add('back-cell');
-            } else {
-                cell.classList.remove('back-cell');
-            }
         });
     });
 }
