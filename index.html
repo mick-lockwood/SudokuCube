@@ -26,6 +26,16 @@
                 <p>• <b>Arrows:</b> Spin Cube</p>
                 <p>• <b>Click Cell:</b> Type (1-9)</p>
             </div>
+			<div class="game-controls">
+			    <h3>New Game</h3>
+			    <button onclick="generateSolvedCube(SOLVE_STYLES.ORDERED)">Reset to 1-9</button>
+			    <div class="button-group-row" style="margin-top: 10px;">
+			        <button onclick="scrambleCube('easy')">Easy</button>
+			        <button onclick="scrambleCube('medium')">Med</button>
+			        <button onclick="scrambleCube('hard')">Hard</button>
+			    </div>
+			</div>
+			<hr>
 			<div class="controls">
 				<h3>Face Orientation</h3>
 				<div class="cube-map">
