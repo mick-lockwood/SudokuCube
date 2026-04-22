@@ -118,7 +118,7 @@ body { margin: 0; background: #1a1a1a; color: white; font-family: sans-serif; ov
     display: grid;
     grid-template-areas: 
         ".    top  .    ."
-        "left front right back"
+        "back left front right"
         ".    bot  .    .";
     gap: 2px;
     width: 120px;
