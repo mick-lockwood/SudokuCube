@@ -156,20 +156,21 @@ button[onclick*="expert"]:hover {
 
 /* THE ONLY 3D POSITIONS YOU NEED */
 .front  { transform: rotateY(0deg)   translateZ(var(--half)); }
-.back   { transform: rotateX(180deg) translateZ(var(--half)); }
+/* DELETE THE OLD .back LINE FROM HERE */
 .right  { transform: rotateY(90deg)  translateZ(var(--half)); }
 .left   { transform: rotateY(-90deg) translateZ(var(--half)); }
 .top    { transform: rotateX(90deg)  translateZ(var(--half)); }
 .bottom { transform: rotateX(-90deg) translateZ(var(--half)); }
 
+/* THE CORRECTED BACK FACE POSITION */
 .face.back {
-    /* The Book Turn: Mirrors horizontally so 1 is Top-Left for you */
-    transform: rotateY(180deg) translateZ(150px) scaleX(-1);
+    /* rotateY moves it to the back, scaleX(-1) makes it read left-to-right */
+    transform: rotateY(180deg) translateZ(var(--half)) scaleX(-1);
     background-color: rgba(255, 255, 0, 0.8);
 }
 
 .face.back .cell {
-    /* Un-mirrors the number so it's readable, but keeps it upright */
+    /* This flips the text back to readable while keeping it right-side up */
     transform: scaleX(-1);
 }
 
